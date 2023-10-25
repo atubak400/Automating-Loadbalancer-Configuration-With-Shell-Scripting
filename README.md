@@ -278,8 +278,7 @@ For example:
 ```
 
 
-### Now we have our load balancer setup!
-
+### Step 7: Validating the setup!
 > Now that our load balancer is set up, let's test it by accessing the Load Balancer's Public DNS name from a web browser. We should see server 1 and server 2 taking turns serving web pages: 
 
 ```
