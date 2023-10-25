@@ -13,11 +13,11 @@ By automating load balancer configuration, Engineers can achieve greater efficie
 
 > We will be writing a script that automates the installation and configuration of the Apache web server to listen on port 8000. It does this by updating the package list, installing the Apache2 package, checking if the Apache2 service is running, and modifying the necessary configuration files. It also creates an index.html file in the /var/www/html directory with a welcome message and the public IP address of the EC2 instance. Finally, it restarts the Apache2 service.
 
-![nginx](./img/1.png)
+![nginx](./img/0a.png)
 
 > We will also be writing another script that automates the configuration of Nginx to act as a load balancer. It does this by installing Nginx, creating a new configuration file, and modifying it to specify the upstream servers and configure Nginx to listen on port 80. It then tests the configuration and restarts the Nginx service.
 
-![nginx](./img/2.png)
+![nginx](./img/0b.png)
 
 
 ## Deploying and configuring web servers
@@ -39,7 +39,7 @@ By automating load balancer configuration, Engineers can achieve greater efficie
 ### Step 2: Open port 8000 to allow traffic from anyhere using the security group. 
 To secure web traffic on port 8000, modify the associated security group's rules within the AWS EC2 dashboard, ensuring that access is restricted to trusted sources.
 
- Select your instance, scroll down the security tab, and select instance security group
+> Select your instance, scroll down the security tab, and select instance security group
 
 ![Provision EC2 Instances](./img/3.png)
 
