@@ -13,14 +13,16 @@ By automating load balancer configuration, Engineers can achieve greater efficie
 
 > We will be writing a script that automates the installation and configuration of the Apache web server to listen on port 8000. It does this by updating the package list, installing the Apache2 package, checking if the Apache2 service is running, and modifying the necessary configuration files. It also creates an index.html file in the /var/www/html directory with a welcome message and the public IP address of the EC2 instance. Finally, it restarts the Apache2 service.
 
-![nginx](./img/0a.png)
+![nginx](./img/1.png)
 
 > We will also be writing another script that automates the configuration of Nginx to act as a load balancer. It does this by installing Nginx, creating a new configuration file, and modifying it to specify the upstream servers and configure Nginx to listen on port 80. It then tests the configuration and restarts the Nginx service.
 
-![nginx](./img/0b.png)
+![nginx](./img/2.png)
 
 
 ## Deploying and configuring web servers
+
+![nginx](./img/0a.png)
 
 ### Step 1: Provision an EC2 instance running ubuntu 20.04. 
 
@@ -120,14 +122,145 @@ echo "<!DOCTYPE html>
 sudo systemctl restart apache2
 
 ```
-### Step 6: Change the permissions on the file to make an executable using the command below:
+
+### Step 6: Save and close the file by pressing `CTRL+X` then `Y` for Yes and `Enter`.
+
+### Step 7: Change the permissions on the file to make an executable using the command below:
 
 ```
     sudo chmod +x install_configure_apache.sh
 ```
 
-### Step 7: Run the shell script using the command below. Make sure you read the instructions in the shell script to learn how to use it.
+### Step 8: Run the shell script using the command below. Make sure you read the instructions in the shell script to learn how to use it.
 
 ```
     ./install_configure_apache.sh EC2_PUBLIC_IP
 ```
+
+
+## Deploying and configuring Nginx Load Balancer
+
+![nginx](./img/0b.png)
+
+### Step 1: Provision a new EC2 instance running ubuntu 22.04. 
+
+![Provision EC2 Instances](./img/15.png)
+
+![Provision EC2 Instances](./img/16.png)
+
+
+> Make sure port 80 is opened to accept traffic from anywhere. 
+
+![Provision EC2 Instances](./img/17.png)
+
+![Provision EC2 Instances](./img/18.png)
+
+> Instance launched
+
+![Provision EC2 Instances](./img/19.png)
+
+> Next SSH into the instance
+
+* If you're using your local terminal, navigate to the directory containing your key pair:
+ ```
+ cd ./folder-containing-key-pair
+ ```
+* Run this command, if necessary, to ensure your key is not publicly viewable:
+```
+chmod 400 docker.pem
+```
+* Connect to your instance using its Public DNS:
+```
+ssh -i "key-pair.pem" ubuntu@your-instance-public-dns
+```
+* If you're prompted to answer a question, choose `yes`
+
+
+### Step 2: On your terminal, open a file nginx.sh using the command below:
+
+```
+sudo nano configure_nginx_loadbalancer.sh
+```
+
+### Step 3: Copy and Paste the script below inside the file:
+
+```
+
+#!/bin/bash
+
+######################################################################################################################
+##### This automates the configuration of Nginx to act as a load balancer
+##### Usage: The script is called with 3 command line arguments. The public IP of the EC2 instance where Nginx is installed
+##### the webserver urls for which the load balancer distributes traffic. An example of how to call the script is shown below:
+##### ./configure_nginx_loadbalancer.sh PUBLIC_IP Webserver-1 Webserver-2
+#####  ./configure_nginx_loadbalancer.sh 127.0.0.1 192.2.4.6:8000  192.32.5.8:8000
+############################################################################################################# 
+
+PUBLIC_IP=$1
+firstWebserver=$2
+secondWebserver=$3
+
+[ -z "${PUBLIC_IP}" ] && echo "Please pass the Public IP of your EC2 instance as the argument to the script" && exit 1
+
+[ -z "${firstWebserver}" ] && echo "Please pass the Public IP together with its port number in this format: 127.0.0.1:8000 as the second argument to the script" && exit 1
+
+[ -z "${secondWebserver}" ] && echo "Please pass the Public IP together with its port number in this format: 127.0.0.1:8000 as the third argument to the script" && exit 1
+
+set -x # debug mode
+set -e # exit the script if there is an error
+set -o pipefail # exit the script when there is a pipe failure
+
+
+sudo apt update -y && sudo apt install nginx -y
+sudo systemctl status nginx
+
+if [[ $? -eq 0 ]]; then
+    sudo touch /etc/nginx/conf.d/loadbalancer.conf
+
+    sudo chmod 777 /etc/nginx/conf.d/loadbalancer.conf
+    sudo chmod 777 -R /etc/nginx/
+
+    
+    echo " upstream backend_servers {
+
+            # your are to replace the public IP and Port to that of your webservers
+            server  "${firstWebserver}"; # public IP and port for webserser 1
+            server "${secondWebserver}"; # public IP and port for webserver 2
+
+            }
+
+           server {
+            listen 80;
+            server_name "${PUBLIC_IP}";
+
+            location / {
+                proxy_pass http://backend_servers;   
+            }
+    } " > /etc/nginx/conf.d/loadbalancer.conf
+fi
+
+sudo nginx -t
+
+sudo systemctl restart nginx
+
+```
+
+### Step 4: Save and close the file by pressing `CTRL+X` then `Y` for Yes and `Enter`.
+
+### Step 5: Change the file permission to make it an executable using the command below:
+
+sudo chmod +x configure_nginx_loadbalancer.sh
+
+### Step 6: Run the bash script with the following command:
+
+`./configure_nginx_loadbalancer.sh Load_Balancer_PUBLIC_IP Webserver-1 Webserver-2`
+
+`./configure_nginx_loadbalancer.sh 127.0.0.1 192.2.4.6:8000  192.32.5.8:8000`
+
+
+## Verify the setup
+> Screenshot of Server 1
+> Screenshot of Server 2
+> Screenshot Load Balancer
+
+
