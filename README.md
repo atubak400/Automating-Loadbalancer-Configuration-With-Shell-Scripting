@@ -259,6 +259,8 @@ sudo chmod +x configure_nginx_loadbalancer.sh
 ./configure_nginx_loadbalancer.sh Load_Balancer_PUBLIC_IP Webserver-1 Webserver-2
 ```
 
+For example:
+
 ```
 ./configure_nginx_loadbalancer.sh 127.0.0.1 192.2.4.6:8000  192.32.5.8:8000
 ```
@@ -266,10 +268,10 @@ sudo chmod +x configure_nginx_loadbalancer.sh
 
 ## Verify the setup
 > Screenshot of Server 1
-![Server 1](https://i.imgur.com/ZOEzJLG.png)
+<!--![Server 1](https://i.imgur.com/ZOEzJLG.png)-->
 > Screenshot of Server 2
-![Server 2](https://i.imgur.com/oVQgkKl.png)
+<!--![Server 2](https://i.imgur.com/oVQgkKl.png)-->
 > Screenshot Load Balancer
-![Load Balancer](https://i.imgur.com/hbDqMuT.png)
+<!--![Load Balancer](https://i.imgur.com/hbDqMuT.png)-->
 
 
