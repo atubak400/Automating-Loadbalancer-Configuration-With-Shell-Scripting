@@ -137,6 +137,18 @@ sudo systemctl restart apache2
     ./install_configure_apache.sh EC2_PUBLIC_IP
 ```
 
+### Step 9: 
+When you visit **http://"your-public-ip":8000** on your web browser you should find a page like so:
+
+```
+http://"your-public-ip":8000
+```
+
+> Screenshot of Server 1
+<!--![Server 1](https://i.imgur.com/ZOEzJLG.png)-->
+> Screenshot of Server 2
+<!--![Server 2](https://i.imgur.com/oVQgkKl.png)-->
+
 
 ## Deploying and configuring Nginx Load Balancer
 
@@ -266,12 +278,18 @@ For example:
 ```
 
 
-## Verify the setup
-> Screenshot of Server 1
-<!--![Server 1](https://i.imgur.com/ZOEzJLG.png)-->
-> Screenshot of Server 2
-<!--![Server 2](https://i.imgur.com/oVQgkKl.png)-->
+### Now we have our load balancer setup!
+
+> Now that our load balancer is set up, let's test it by accessing the Load Balancer's Public DNS name from a web browser. We should see server 1 and server 2 taking turns serving web pages: 
+
+```
+http://<Load-Balancer-Public-IP-Address>:80
+```
 > Screenshot Load Balancer
+<!--![Load Balancer](https://i.imgur.com/hbDqMuT.png)-->
 <!--![Load Balancer](https://i.imgur.com/hbDqMuT.png)-->
 
 
+You can see server 1 and server 2 taking turns serving web pages.
+
+# Congratulations on Automating Load balancer Configuration With Shell Scripting
