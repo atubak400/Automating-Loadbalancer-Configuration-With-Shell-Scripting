@@ -176,7 +176,7 @@ ssh -i "key-pair.pem" ubuntu@your-instance-public-dns
 * If you're prompted to answer a question, choose `yes`
 
 
-### Step 2: On your terminal, open a file nginx.sh using the command below:
+### Step 2: On your terminal, open a file configure_nginx_loadbalancer.sh using the command below:
 
 ```
 sudo nano configure_nginx_loadbalancer.sh
@@ -249,18 +249,27 @@ sudo systemctl restart nginx
 
 ### Step 5: Change the file permission to make it an executable using the command below:
 
+```
 sudo chmod +x configure_nginx_loadbalancer.sh
+```
 
 ### Step 6: Run the bash script with the following command:
 
-`./configure_nginx_loadbalancer.sh Load_Balancer_PUBLIC_IP Webserver-1 Webserver-2`
+```
+./configure_nginx_loadbalancer.sh Load_Balancer_PUBLIC_IP Webserver-1 Webserver-2
+```
 
-`./configure_nginx_loadbalancer.sh 127.0.0.1 192.2.4.6:8000  192.32.5.8:8000`
+```
+./configure_nginx_loadbalancer.sh 127.0.0.1 192.2.4.6:8000  192.32.5.8:8000
+```
 
 
 ## Verify the setup
 > Screenshot of Server 1
+![Server 1](https://i.imgur.com/ZOEzJLG.png)
 > Screenshot of Server 2
+![Server 2](https://i.imgur.com/oVQgkKl.png)
 > Screenshot Load Balancer
+![Load Balancer](https://i.imgur.com/hbDqMuT.png)
 
 
