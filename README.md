@@ -300,6 +300,7 @@ For example:
 http://<Load-Balancer-Public-IP-Address>:80
 ```
 > Screenshot Load Balancer
+
 ![nginx LB](./img/101.png)
 
 ![nginx LB](./img/102.png)
