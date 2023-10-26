@@ -71,6 +71,8 @@ chmod 400 key-pair.pem
 ssh -i "key-pair.pem" ubuntu@your-instance-public-dns
 ```
 
+![Provision EC2 Instances](./img/3b.png)
+
 ### Step 4: Open a file by running
 
 ```
@@ -128,14 +130,18 @@ sudo systemctl restart apache2
 ### Step 7: Change the permissions on the file to make an executable using the command below:
 
 ```
-    sudo chmod +x install_configure_apache.sh
+sudo chmod +x install_configure_apache.sh
 ```
 
 ### Step 8: Run the shell script using the command below. Make sure you read the instructions in the shell script to learn how to use it.
 
 ```
-    ./install_configure_apache.sh EC2_PUBLIC_IP
+./install_configure_apache.sh EC2_PUBLIC_IP
 ```
+
+![nginx](./img/3c.png)
+![nginx](./img/3cc.png)
+
 
 ### Step 9: 
 When you visit **http://"your-public-ip":8000** on your web browser you should find a page like so:
@@ -145,9 +151,14 @@ http://"your-public-ip":8000
 ```
 
 > Screenshot of Server 1
-<!--![Server 1](https://i.imgur.com/ZOEzJLG.png)-->
+
+![nginx](./img/3d.png)
+
+--
+
 > Screenshot of Server 2
-<!--![Server 2](https://i.imgur.com/oVQgkKl.png)-->
+
+![nginx](./img/3e.png)
 
 
 ## Deploying and configuring Nginx Load Balancer
@@ -277,6 +288,10 @@ For example:
 ./configure_nginx_loadbalancer.sh 127.0.0.1 192.2.4.6:8000  192.32.5.8:8000
 ```
 
+![nginx LB](./img/99.png)
+
+![nginx LB](./img/100.png)
+
 
 ### Step 7: Validating the setup!
 > Now that our load balancer is set up, let's test it by accessing the Load Balancer's Public DNS name from a web browser. We should see server 1 and server 2 taking turns serving web pages: 
@@ -285,8 +300,9 @@ For example:
 http://<Load-Balancer-Public-IP-Address>:80
 ```
 > Screenshot Load Balancer
-<!--![Load Balancer](https://i.imgur.com/hbDqMuT.png)-->
-<!--![Load Balancer](https://i.imgur.com/hbDqMuT.png)-->
+![nginx LB](./img/101.png)
+
+![nginx LB](./img/102.png)
 
 
 You can see server 1 and server 2 taking turns serving web pages.
